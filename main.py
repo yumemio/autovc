@@ -3,10 +3,12 @@ import argparse
 from solver_encoder import Solver
 from data_loader import get_loader
 from torch.backends import cudnn
+from pathlib import Path
 
 
 def str2bool(v):
     return v.lower() in ('true')
+
 
 def main(config):
     # For fast training.
@@ -18,9 +20,7 @@ def main(config):
     solver = Solver(vcc_loader, config)
 
     solver.train()
-        
-    
-        
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -39,7 +39,9 @@ if __name__ == '__main__':
     parser.add_argument('--len_crop', type=int, default=128, help='dataloader output sequence length')
     
     # Miscellaneous.
-    parser.add_argument('--log_step', type=int, default=10)
+    parser.add_argument('--log_step', type=int, default=500)
+    parser.add_argument('--save_step', type=int, default=20000)
+    parser.add_argument('--save_as', type=Path, default='./autovc_model.ckpt')
 
     config = parser.parse_args()
     print(config)

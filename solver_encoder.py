@@ -28,6 +28,8 @@ class Solver(object):
         self.use_cuda = torch.cuda.is_available()
         self.device = torch.device('cuda:0' if self.use_cuda else 'cpu')
         self.log_step = config.log_step
+        self.save_step = config.save_step
+        self.save_as = config.save_as
 
         # Build the model and tensorboard.
         self.build_model()
@@ -119,9 +121,11 @@ class Solver(object):
                 for tag in keys:
                     log += ", {}: {:.4f}".format(tag, loss[tag])
                 print(log)
-                
 
-    
-    
-
-    
+            # Save the model at every save_step
+            if (i+1) % self.save_step == 0:
+                print("Saving the model at step {}".format(i+1))
+                torch.save(
+                    {'model': self.G.state_dict(), 'optimizer': self.g_optimizer.state_dict()},
+                    self.save_as
+                )

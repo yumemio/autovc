@@ -34,7 +34,11 @@ class Solver(object):
         # Build the model and tensorboard.
         self.build_model()
 
-            
+        # Load ckpt if exists.
+        if self.save_as.is_file():
+            self.load_weight(self.save_as)
+
+
     def build_model(self):
         
         self.G = Generator(self.dim_neck, self.dim_emb, self.dim_pre, self.freq)        
@@ -42,6 +46,14 @@ class Solver(object):
         self.g_optimizer = torch.optim.Adam(self.G.parameters(), 0.0001)
         
         self.G.to(self.device)
+
+
+    def load_weight(self, ckpt_path):
+        """Loads model weights.
+        @param  ckpt_path   `Path` to the checkpoint
+        """
+        g_checkpoint = torch.load(ckpt_path, map_location=self.device)
+        self.G.load_state_dict(g_checkpoint['model'])
         
 
     def reset_grad(self):

@@ -52,6 +52,7 @@ class Solver(object):
         """Loads model weights.
         @param  ckpt_path   `Path` to the checkpoint
         """
+        print(f'Found a checkpoint at {ckpt_path}. Loading...')
         g_checkpoint = torch.load(ckpt_path, map_location=self.device)
         self.G.load_state_dict(g_checkpoint['model'])
         

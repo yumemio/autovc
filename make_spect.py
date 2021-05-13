@@ -6,6 +6,7 @@ from scipy import signal
 from scipy.signal import get_window
 from librosa.filters import mel
 from numpy.random import RandomState
+import hashlib
 
 
 def butter_highpass(cutoff, fs, order=5):
@@ -50,7 +51,9 @@ for subdir in sorted(subdirList):
     if not os.path.exists(os.path.join(targetDir, subdir)):
         os.makedirs(os.path.join(targetDir, subdir))
     _,_, fileList = next(os.walk(os.path.join(dirName,subdir)))
-    prng = RandomState(int(subdir[1:])) 
+    digest = hashlib.sha512(bytes(subdir, 'utf-8')).hexdigest()
+    seed = int(digest, 16) % (2 ** 32 - 1)
+    prng = RandomState(seed)
     for fileName in sorted(fileList):
         # Read audio file
         x, fs = sf.read(os.path.join(dirName,subdir,fileName))

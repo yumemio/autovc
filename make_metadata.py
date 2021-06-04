@@ -109,7 +109,7 @@ if __name__ == '__main__':
         "--embedding", "-e",
         type=str,
         default="lstm",
-        choice=["one-hot", "lstm"],
+        choices=["one-hot", "lstm"],
         help="Embedding generation method.")
     parser.add_argument(
         "--checkpoint", "-c",

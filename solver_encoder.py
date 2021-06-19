@@ -19,9 +19,9 @@ class Solver(object):
         self.dim_emb = config.dim_emb
         self.dim_pre = config.dim_pre
         self.freq = config.freq
-        self.loss_id = config.loss_id   # Loss function for ident, 
-        self.loss_id_psnt = config.loss_id_psnt # Loss function for id_psnt
-        self.loss_cd = config.loss_cd # Loss function for cd
+        self.loss_type_id = config.loss_type_id   # Loss function for ident, 
+        self.loss_type_id_psnt = config.loss_type_id_psnt # Loss function for id_psnt
+        self.loss_type_cd = config.loss_type_cd # Loss function for cd
 
         # Training configurations.
         self.batch_size = config.batch_size
@@ -121,7 +121,7 @@ class Solver(object):
             
             # Code semantic loss.
             code_reconst = self.G(x_identic_psnt, emb_org, None)
-            g_loss_cd = F.loss_function_cd(code_real, code_reconst)
+            g_loss_cd = loss_function_cd(code_real, code_reconst)
 
 
             # Backward and optimize.

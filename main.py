@@ -31,6 +31,10 @@ if __name__ == '__main__':
     parser.add_argument('--dim_emb', type=int, default=256)
     parser.add_argument('--dim_pre', type=int, default=512)
     parser.add_argument('--freq', type=int, default=16)
+    loss_types = ['mse_loss', 'l1_loss']
+    parser.add_argument('--loss_type_id', choices=loss_types, default='mse_loss')
+    parser.add_argument('--loss_type_id_psnt', choices=loss_types, default='mse_loss')
+    parser.add_argument('--loss_type_cd', choices=loss_types, default='l1_loss')
     
     # Training configuration.
     parser.add_argument('--data_dir', type=str, default='./spmel')

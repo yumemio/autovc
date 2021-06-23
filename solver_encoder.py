@@ -114,8 +114,11 @@ class Solver(object):
             loss_function_id_psnt = loss_types_to_function[self.loss_type_id_psnt]
             loss_function_cd = loss_types_to_function[self.loss_type_cd]
 
-            # Identity mapping loss (users can choose loss function)
-            x_identic, x_identic_psnt, code_real = self.G(x_real, emb_org, emb_org)
+            # Identity mapping loss.
+            x_identic, x_identic_psnt, code_real = self.G(
+                x_real, emb_org, emb_org)
+            x_identic = x_identic.squeeze(1)
+            x_identic_psnt = x_identic_psnt.squeeze(1)
             g_loss_id = loss_function_id(x_real, x_identic)   
             g_loss_id_psnt = loss_function_id_psnt(x_real, x_identic_psnt)   
             

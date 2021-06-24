@@ -3,7 +3,8 @@ import pickle
 import numpy as np
 import soundfile as sf
 from scipy import signal
-from scipy.signal import get_window from librosa.filters import mel
+from scipy.signal import get_window
+from librosa.filters import mel
 from numpy.random import RandomState
 import hashlib
 
